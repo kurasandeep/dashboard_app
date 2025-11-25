@@ -19,7 +19,6 @@ from datetime import datetime, timedelta
 from meteostat import Point, Daily
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
-import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 
 # --- 0. CONFIGURATION AND SECRETS ---
