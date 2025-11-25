@@ -24,12 +24,12 @@ from spotipy.oauth2 import SpotifyClientCredentials
 # --- 0. CONFIGURATION AND SECRETS ---
 
 # Create .streamlit directory if it doesn't exist
-import os
-if not os.path.exists('.streamlit'):
-    os.makedirs('.streamlit')
+#import os
+#if not os.path.exists('.streamlit'):
+ #   os.makedirs('.streamlit')
 
 # Write secrets.toml file if it doesn't exist or is empty
-secrets_path = '.streamlit/secrets.toml'
+#secrets_path = '.streamlit/secrets.toml'
 """if not os.path.exists(secrets_path) or os.stat(secrets_path).st_size == 0:
     with open(secrets_path, 'w') as f:
         f.write('spotify_client_id = "YOUR_SPOTIFY_CLIENT_ID"\n')
@@ -42,7 +42,7 @@ try:
     SPOTIFY_CLIENT_ID = st.secrets["spotify_client"]
     SPOTIFY_SECRET = st.secrets["spotify_secret"]
 except KeyError:
-    st.error("Spotify credentials not found. Ensure .streamlit/secrets.toml is configured with 'spotify_client_id' and 'spotify_secret'.")
+    st.error("Spotify credentials not found. Ensure .streamlit/secrets.toml is configured with 'spotify_client' and 'spotify_secret'.")
     st.stop()
 
 
