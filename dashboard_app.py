@@ -23,26 +23,27 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 # --- 0. CONFIGURATION AND SECRETS ---
 
-# Create .streamlit directory if it doesn't exist
-#import os
-#if not os.path.exists('.streamlit'):
- #   os.makedirs('.streamlit')
-
-# Write secrets.toml file if it doesn't exist or is empty
-#secrets_path = '.streamlit/secrets.toml'
-"""if not os.path.exists(secrets_path) or os.stat(secrets_path).st_size == 0:
-    with open(secrets_path, 'w') as f:
-        f.write('spotify_client_id = "YOUR_SPOTIFY_CLIENT_ID"\n')
-        f.write('spotify_secret = "YOUR_SPOTIFY_SECRET"\n')
-    st.warning("Please replace 'YOUR_SPOTIFY_CLIENT_ID' and 'YOUR_SPOTIFY_SECRET' in .streamlit/secrets.toml with your actual Spotify API credentials.")
-    st.stop()"""
-
 # Streamlit will automatically load these secrets from .streamlit/secrets.toml
 try:
-    SPOTIFY_CLIENT_ID = st.secrets["spotify_client"]
-    SPOTIFY_SECRET = st.secrets["spotify_secret"]
+    SPOTIFY_CLIENT_ID = st.secrets.get("spotify_client_id")
+    SPOTIFY_SECRET = st.secrets.get("spotify_secret")
+
+    # Check if the values were actually set (not None/empty string)
+    if not SPOTIFY_CLIENT_ID or not SPOTIFY_SECRET:
+        raise KeyError("One or both Spotify secrets are empty.")
+
 except KeyError:
-    st.error("Spotify credentials not found. Ensure .streamlit/secrets.toml is configured with 'spotify_client' and 'spotify_secret'.")
+    st.error("❌ Spotify API Credentials Error")
+    st.markdown("""
+        **Action Required:** Your app cannot run without Spotify credentials.  
+        Please configure the secrets in your Streamlit Cloud deployment settings (under the **Secrets** tab) 
+        with the following keys and values:
+        
+        * `spotify_client_id`
+        * `spotify_secret`
+        
+        *Note: Do not include the `.streamlit/secrets.toml` file in your repository. Use the Streamlit Cloud UI.*
+        """)
     st.stop()
 
 
